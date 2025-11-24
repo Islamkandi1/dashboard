@@ -9,6 +9,8 @@ import { Toaster } from 'react-hot-toast';
 import Login from './components/Auth/Login/Login';
 import SignUp from './components/Auth/signUp/SignUp';
 import UserSession from './context/userSession/UserSession';
+import ForgetPassword from './components/pages/resetPassword/ForgetPassword';
+import ResetPassword from './components/Auth/resetPassword/ResetPassword';
 
 
 
@@ -29,11 +31,14 @@ const App = () => {
     },
     { path: "/login", element: <Login /> },
     { path: "/signup", element: <SignUp /> },
+    { path: "/forgetPassword", element: <ForgetPassword /> },
+    { path: "/resetPassword", element: <ResetPassword /> },
   ])
 
   return (
     <>
       <Toaster />
+
       <UserSession>
         <RouterProvider router={router} />
       </UserSession>

@@ -7,7 +7,6 @@ import supabase from '../../../../supabase-client';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { BeatLoader } from 'react-spinners';
-import ForgetPassword from '../forgetPassword/ForgetPassword';
 
 export default function Login() {
   const {
@@ -78,7 +77,7 @@ export default function Login() {
 
 
   return (
-    <main className="min-h-screen  bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-linear-to-br from-blue-500   via-blue-500 to-purple-500  flex items-center justify-center p-4">
       <section className="w-full md:w-[75%] lg:w-[50%]  gap-6r">
 
         {/* LOGIN FORM */}
@@ -143,7 +142,16 @@ export default function Login() {
               </section>
 
               {/* Forgot Password */}
-              <ForgetPassword />
+              <section>
+                <Link
+                  to="/forgetPassword"
+                  type="button"
+                  className="text-sm  font-medium text-blue-600 hover:text-blue-500 cursor-pointer"
+                >
+                  Forgot password?
+                </Link>
+              </section>
+
 
               {/* Submit Button */}
               <button

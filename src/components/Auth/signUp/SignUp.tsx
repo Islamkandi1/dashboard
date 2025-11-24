@@ -69,7 +69,7 @@ const SignUp = () => {
     return (
         <>
             {/* SIGNUP FORM */}
-            <main className="flex justify-center py-3 px-2 ">
+            <main className="flex justify-center min-h-screen items-center  bg-linear-to-br from-purple-500   via-purple-500 to-[#CE22A0] py-3 px-2 ">
                 <section className='w-full overflow-hidden  rounded-2xl shadow-xl md:w-[75%] lg:w-[50%]'>
                     <section className="bg-linear-to-r from-purple-600 to-pink-600 p-8 text-white">
                         <h2 className="text-3xl font-bold text-center mb-1">
@@ -81,10 +81,10 @@ const SignUp = () => {
                     </section>
 
                     {/* Signup Form */}
-                    <section className="p-6">
+                    <section className="p-6 bg-white">
                         <form onSubmit={handleSubmit(SignUp)} >
                             {/* Name Field */}
-                            <section className='mb-1'>
+                            <section className='mb-1 '>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Full Name
                                 </label>
