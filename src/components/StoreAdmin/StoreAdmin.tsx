@@ -1,5 +1,6 @@
-import { AlertTriangle, BarChart3, LogOut, Package, ShoppingBag, ShoppingCart, TrendingUp, User } from "lucide-react";
+import { AlertTriangle, BarChart3, Package, ShoppingBag, ShoppingCart, TrendingUp } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
+import Logout from "../Auth/logout/LogOut";
 
 const StoreAdmin = () => {
   return (
@@ -61,22 +62,7 @@ const StoreAdmin = () => {
 
 
 
-          <section className="pt-6 ">
-            <section className="flex items-center px-4 py-3 mb-2">
-              <section className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center mr-3">
-                <User className="w-5 h-5" />
-              </section>
-              <section className="flex-1">
-                <p className="text-sm font-medium">userName</p>
-              </section>
-            </section>
-            <button
-              className="w-full flex items-center px-4 py-3 rounded-lg transition hover:bg-red-600"
-            >
-              <LogOut className="w-5 h-5 mr-3" />
-              Logout
-            </button>
-          </section>
+          <Logout />
 
 
 

@@ -35,7 +35,12 @@ const SignUp = () => {
         // sign up==================================================
         const { data, error } = await supabase.auth.signUp({
             email: values.email,
-            password: values.password
+            password: values.password,
+            options: {
+                data: {
+                    full_name: values.name, 
+                },
+            },
         })
         if (error) {
             toast.error(error.message)
