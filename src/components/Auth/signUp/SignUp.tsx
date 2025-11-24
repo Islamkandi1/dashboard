@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight, Eye, Lock, Mail, User, } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { signupSchema, type SignUpType } from '../../../schema/signUp.schema'
 import supabase from '../../../../supabase-client'
 import toast from 'react-hot-toast'
@@ -11,6 +11,7 @@ import { BeatLoader } from 'react-spinners'
 
 const SignUp = () => {
     const [isloading, setIsLoading] = useState(false)
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -42,6 +43,9 @@ const SignUp = () => {
             reset()
             toast.success("signup successfully")
             addNewUser(values, data)
+            setTimeout(() => {
+                navigate("/login")
+            }, 700);
         }
         setIsLoading(false)
     }
