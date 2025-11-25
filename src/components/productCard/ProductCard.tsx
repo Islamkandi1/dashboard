@@ -2,24 +2,28 @@ import toast from 'react-hot-toast'
 import supabase from '../../../supabase-client'
 import type { Product2 } from '../../types/products.type'
 import { Edit, Trash2 } from 'lucide-react'
-import { useState } from 'react'
 import { ClipLoader } from 'react-spinners'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const ProductCard = ({ product, setEditingProduct, setShowForm }: { product: Product2; setEditingProduct: (product: Product2) => void; setShowForm: (show: boolean) => void }) => {
-    const [deleteLoading, setDeleteLoading] = useState(false)
+    const queryClient = useQueryClient();
     // delete product==========================================================
     async function deleteProduct(id: number) {
-        setDeleteLoading(true)
-        const { error } = await supabase.from("products").delete().eq("id", id)
-        if (error) {
-            toast.error(error.message)
-        } else {
-            toast.success('deleted Successfully!')
-        }
-        setDeleteLoading(true)
+        const {data } = await supabase.from("products").delete().eq("id", id)
+        return data
     }
-
-    function onEdit(product:Product2) {
+    // handle add & update cashing===============================================
+    const { mutate, isPending } = useMutation({
+        mutationFn: deleteProduct,
+        onSuccess: () => {
+            toast.success('deleted Successfully!')
+            queryClient.invalidateQueries({ queryKey: ["products"] });
+        },
+        onError: (error) => {
+             toast.error(error.message)
+        }
+    })
+    function onEdit(product: Product2) {
         setEditingProduct(product);
         setShowForm(true);
     }
@@ -46,11 +50,11 @@ const ProductCard = ({ product, setEditingProduct, setShowForm }: { product: Pro
             <td className="py-3 px-4 text-sm">{Array.isArray(product.Colors) ? product.Colors.join(', ') : product.Colors}</td>
             <td className="py-3 px-4">
                 <section className="flex justify-end items-center gap-2">
-                    <button onClick={()=>onEdit(product)} className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded transition">
+                    <button onClick={() => onEdit(product)} className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded transition">
                         <Edit className="w-4 h-4" />
                     </button>
-                    <button disabled={deleteLoading} onClick={() => deleteProduct(product.id)} className="p-2 cursor-pointer text-red-600 hover:bg-red-50 rounded transition">
-                        {deleteLoading ? <ClipLoader
+                    <button disabled={isPending} onClick={() => mutate(product.id)} className="p-2 cursor-pointer text-red-600 hover:bg-red-50 rounded transition">
+                        {isPending ? <ClipLoader
                             color="#E7000B"
                             size={15}
                         /> : <Trash2 className="w-4 h-4" />}

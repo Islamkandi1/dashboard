@@ -4,10 +4,11 @@ export interface Product2 {
   Colors: string;
   Quantity: number;
   category: string;
+  subcategory: string;
   created_at: string;
   description: string;
   id: 8;
-  image:string|null;
+  image: string | null;
   price: number;
   productName: string;
 }

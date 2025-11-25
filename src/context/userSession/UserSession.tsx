@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import supabase from '../../../supabase-client';
 import { userSession } from './sessionContext';
-
+import type { Session } from "@supabase/supabase-js";
 const UserSession = ({ children }: { children: React.ReactNode }) => {
 
 
-  const [session, setSession] = useState<object | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   //  get session and follow session==================================================
   useEffect(() => {
-    //     supabase.auth.getSession().then(({ data }) => {
-    //   setSession(data.session);
-    // });
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_, session) => {
         setSession(session);
-        console.log(session);
       }
     );
 

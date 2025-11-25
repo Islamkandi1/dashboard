@@ -1,4 +1,4 @@
-import {  useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Plus, Search } from "lucide-react";
 import ProductForm from "../../ProductForm/ProductForm";
 import supabase from "../../../../supabase-client";
@@ -137,13 +137,14 @@ const ProductsManagement = () => {
                 <th className="text-right py-3 px-4">Actions</th>
               </tr>
             </thead>
-            {isLoading ? <>
-              <Skeleton change={false} />
-              <Skeleton change={false} />
-            </> : <tbody>
-              {data?.map(product => <ProductCard product={product} key={product.id} setShowForm={setShowForm} setEditingProduct={setEditingProduct} />)}
-            </tbody>}
-
+            <tbody>
+              {isLoading ? <>
+                <Skeleton change={false} />
+                <Skeleton change={false} />
+              </> :
+                data?.map(product => <ProductCard product={product} key={product.id} setShowForm={setShowForm} setEditingProduct={setEditingProduct} />)
+              }
+            </tbody>
           </table>
           {data?.length === 0 && !isLoading && <p className="text-center my-3 capitalize text-[1.1rem] text-gray-500">no data to display</p>}
         </section>

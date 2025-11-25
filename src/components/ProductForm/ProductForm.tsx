@@ -10,11 +10,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
 
-const ProductForm = ({ cancel, editingProduct,setShowForm }: ProductFormProps) => {
+const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) => {
   const [file, setFile] = useState<File | null>(null);
   const queryClient = useQueryClient();
   let update: boolean = false
-  // handle form=============================================================
+  // handle form===============================================================
   const {
     register,
     handleSubmit,
@@ -25,6 +25,7 @@ const ProductForm = ({ cancel, editingProduct,setShowForm }: ProductFormProps) =
       productName: editingProduct ? editingProduct.productName : "",
       price: editingProduct ? String(editingProduct.price) : "",
       category: editingProduct ? editingProduct.category : "",
+      subcategory: editingProduct ? editingProduct.subcategory : "",
       Quantity: editingProduct ? String(editingProduct.Quantity) : "",
       Colors: editingProduct ? editingProduct.Colors : "",
       description: editingProduct ? editingProduct.description : "",
@@ -143,6 +144,16 @@ const ProductForm = ({ cancel, editingProduct,setShowForm }: ProductFormProps) =
           {errors.category && touchedFields.category && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.category.message}</p>}
         </section>
 
+        <section>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Subcategory</label>
+          <select {...register("subcategory")} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="shirts">shirts</option>
+            <option value="shoes">shoes</option>
+            <option value="pants">pants</option>
+          </select>
+
+          {errors.category && touchedFields.category && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.category.message}</p>}
+        </section>
 
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Stock Quantity</label>

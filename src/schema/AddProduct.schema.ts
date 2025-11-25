@@ -8,6 +8,7 @@ export const AddProductSchema = z
       .max(20, "productName must be at most 20 characters long"),
     price: z.string().nonempty("price is required"),
     category: z.string().nonempty("Category is required"),
+    subcategory: z.string().nonempty("subcategory is required"),
     Quantity: z
       .string()
       .nonempty("Quantity is required"),

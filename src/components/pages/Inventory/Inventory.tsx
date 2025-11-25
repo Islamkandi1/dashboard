@@ -45,7 +45,7 @@ const Inventory = () => {
           </section>
           <section className="space-y-3">
             {isLoading ? <StockLoading /> :
-              data?.filter(p => p.Quantity < 10).length === 0 ? (
+              data?.filter(p =>  p.Quantity < 10 && p.Quantity > 0).length === 0 ? (
                 <p className="text-gray-500">No low stock items</p>
               ) : (
                 data
@@ -76,8 +76,8 @@ const Inventory = () => {
             <AlertTriangle className="w-6 h-6 text-red-600 mr-2" />
             <h2 className="text-xl font-bold">Out of Stock</h2>
           </section>
-          {isLoading ? <StockLoading /> : data?.filter(p => p.Quantity < 10).length === 0 ? (
-            <p className="text-gray-500">No low stock items</p>
+          {isLoading ? <StockLoading /> : data?.filter(p => p.Quantity === 0).length === 0 ? (
+            <p className="text-gray-500">No out of stock items</p>
           ) : (
             data
               ?.filter(p => p.Quantity == 0)
