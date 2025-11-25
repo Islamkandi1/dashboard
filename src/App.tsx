@@ -11,6 +11,8 @@ import SignUp from './components/Auth/signUp/SignUp';
 import UserSession from './context/userSession/UserSession';
 import ForgetPassword from './components/pages/resetPassword/ForgetPassword';
 import ResetPassword from './components/Auth/resetPassword/ResetPassword';
+import ProjectProtected from './protectedRoutes/ProjectProtected';
+import AuthProtected from './protectedRoutes/AuthProtected';
 
 
 
@@ -22,17 +24,17 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "", element: <LayOut />, children: [
-        { index: true, element: <HomeOverview /> },
-        { path: "/Products", element: <ProductsManagement /> },
-        { path: "/Orders", element: <OrdersManagement /> },
-        { path: "/Inventory", element: <Inventory /> },
-        { path: "/Analytics", element: <Analytics /> },
+        { index: true, element: <ProjectProtected><HomeOverview /></ProjectProtected> },
+        { path: "/Products", element: <ProjectProtected><ProductsManagement /></ProjectProtected> },
+        { path: "/Orders", element: <ProjectProtected><OrdersManagement /></ProjectProtected> },
+        { path: "/Inventory", element: <ProjectProtected><Inventory /></ProjectProtected> },
+        { path: "/Analytics", element: <ProjectProtected><Analytics /></ProjectProtected> },
       ]
     },
-    { path: "/login", element: <Login /> },
-    { path: "/signup", element: <SignUp /> },
-    { path: "/forgetPassword", element: <ForgetPassword /> },
-    { path: "/resetPassword", element: <ResetPassword /> },
+    { path: "/login", element: <AuthProtected><Login /> </AuthProtected> },
+    { path: "/signup", element: <AuthProtected><SignUp /></AuthProtected> },
+    { path: "/forgetPassword", element: <AuthProtected><ForgetPassword /></AuthProtected> },
+    { path: "/resetPassword", element: <AuthProtected> <ResetPassword /></AuthProtected> },
   ])
 
   return (
