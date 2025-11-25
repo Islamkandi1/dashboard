@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import {  useState, useCallback } from "react";
 import { Plus, Search } from "lucide-react";
 import ProductForm from "../../ProductForm/ProductForm";
 import supabase from "../../../../supabase-client";
@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { type Products } from "../../../types/products.type";
 import ProductCard from "../../productCard/ProductCard";
 import Skeleton from "../../../loadings/Skeleton";
+import { useQuery } from "@tanstack/react-query";
 // Products Management Component
 const ProductsManagement = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -15,13 +16,10 @@ const ProductsManagement = () => {
   const [priceFilter, setPriceFilter] = useState('');
   const [stockFilter, setStockFilter] = useState('');
   // data====================================================
-  const [data, setData] = useState<Products>([])
-  const [isLoading, setIsLoading] = useState(false)
   const [editingProduct, setEditingProduct] = useState<Products[0] | null>(null);
 
   // get all products===============================================
   const getAllProducts = useCallback(async () => {
-    setIsLoading(true)
     let query = supabase.from("products").select("*");
 
     // Search by product name
@@ -53,47 +51,21 @@ const ProductsManagement = () => {
     } else if (stockFilter === "out") {
       query = query.eq("Quantity", 0);
     }
-
-
-    const { data, error } = await query;
-
-
-
-    if (error) {
-      toast.error(error.message)
-    } else {
-      setData(data)
-    }
-    setIsLoading(false)
+    const { data } = await query;
+    return data
   }, [searchTerm, priceFilter, categoryFilter, stockFilter]);
 
-  useEffect(() => {
-    const confirm = () => getAllProducts()
-    confirm()
 
-    const channel = supabase
-      .channel('products_channel')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'products',
-        },
-        () => {
-          getAllProducts();
-        }
-      )
-      .subscribe();
+  // cashing data======================================================
+  const { data, isLoading, isError, error } = useQuery(
+    { queryKey: ['products', searchTerm, categoryFilter, priceFilter, stockFilter], queryFn: getAllProducts }
+  )
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [getAllProducts])
   // hide form===========================================================
   function cancel() {
     setShowForm(false)
   }
+
   // show form=================================================================
   function showAddForm() {
     setShowForm(true)
@@ -102,7 +74,9 @@ const ProductsManagement = () => {
   if (showForm) {
     return <ProductForm editingProduct={editingProduct} cancel={cancel} />;
   }
-
+  if (isError) {
+    toast.error(error.message)
+  }
 
 
   return (
@@ -167,11 +141,11 @@ const ProductsManagement = () => {
               <Skeleton change={false} />
               <Skeleton change={false} />
             </> : <tbody>
-              {data.map(product => <ProductCard product={product} key={product.id} setShowForm={setShowForm} setEditingProduct={setEditingProduct} />)}
+              {data?.map(product => <ProductCard product={product} key={product.id} setShowForm={setShowForm} setEditingProduct={setEditingProduct} />)}
             </tbody>}
 
           </table>
-          {data.length < 1 && !isLoading && <p className="text-center my-3 capitalize text-[1.1rem] text-gray-500">no data to display</p>}
+          {data?.length === 0 && !isLoading && <p className="text-center my-3 capitalize text-[1.1rem] text-gray-500">no data to display</p>}
         </section>
 
       </section>

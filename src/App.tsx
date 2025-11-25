@@ -14,9 +14,10 @@ import ResetPassword from './components/Auth/resetPassword/ResetPassword';
 import ProjectProtected from './protectedRoutes/ProjectProtected';
 import AuthProtected from './protectedRoutes/AuthProtected';
 import NotFound from './components/notFound/NotFound';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 
-
+const queryClient = new QueryClient()
 
 // Main App Component
 const App = () => {
@@ -42,10 +43,11 @@ const App = () => {
   return (
     <>
       <Toaster />
-
+    <QueryClientProvider client={queryClient}>
       <UserSession>
         <RouterProvider router={router} />
       </UserSession>
+    </QueryClientProvider>
     </>
   );
 };
