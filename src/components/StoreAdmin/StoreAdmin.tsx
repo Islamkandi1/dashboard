@@ -69,7 +69,7 @@ const StoreAdmin = () => {
         </section>
 
         {/* Main Content */}
-        <section className="ml-64 p-8"><Outlet /></section>
+        <section className="ml-64 p-8 "><Outlet /></section>
       </main>
     </>
   );

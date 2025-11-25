@@ -13,6 +13,7 @@ import ForgetPassword from './components/pages/resetPassword/ForgetPassword';
 import ResetPassword from './components/Auth/resetPassword/ResetPassword';
 import ProjectProtected from './protectedRoutes/ProjectProtected';
 import AuthProtected from './protectedRoutes/AuthProtected';
+import NotFound from './components/notFound/NotFound';
 
 
 
@@ -29,6 +30,7 @@ const App = () => {
         { path: "/Orders", element: <ProjectProtected><OrdersManagement /></ProjectProtected> },
         { path: "/Inventory", element: <ProjectProtected><Inventory /></ProjectProtected> },
         { path: "/Analytics", element: <ProjectProtected><Analytics /></ProjectProtected> },
+        { path: "*", element: <NotFound /> },
       ]
     },
     { path: "/login", element: <AuthProtected><Login /> </AuthProtected> },
