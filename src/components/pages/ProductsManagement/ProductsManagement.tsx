@@ -72,7 +72,7 @@ const ProductsManagement = () => {
     setEditingProduct(null)
   }
   if (showForm) {
-    return <ProductForm editingProduct={editingProduct} cancel={cancel} />;
+    return <ProductForm setShowForm={setShowForm} editingProduct={editingProduct} cancel={cancel} />;
   }
   if (isError) {
     toast.error(error.message)

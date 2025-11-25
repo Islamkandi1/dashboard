@@ -6,12 +6,14 @@ import supabase from '../../../supabase-client';
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { BeatLoader } from "react-spinners";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
 
-const ProductForm = ({ cancel, editingProduct }: ProductFormProps) => {
+const ProductForm = ({ cancel, editingProduct,setShowForm }: ProductFormProps) => {
   const [file, setFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false)
+  const queryClient = useQueryClient();
+  let update: boolean = false
   // handle form=============================================================
   const {
     register,
@@ -32,32 +34,42 @@ const ProductForm = ({ cancel, editingProduct }: ProductFormProps) => {
   })
 
   // submit====================================================================
-  function submit(values: AddProductFormType) {
+  async function submit(values: AddProductFormType) {
     if (editingProduct) {
-      console.log("done");
-      edite(editingProduct.id, values)
+      await edite(editingProduct.id, values)
     } else {
-      AddProduct(values)
+      await AddProduct(values)
     }
   }
-
+  // handle add & update cashing===============================================
+  const { mutate, isPending } = useMutation({
+    mutationFn: submit,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      if (update) {
+        toast.success('product updated Successfully!')
+        setShowForm(false)
+      } else {
+        toast.success('product add Successfully!')
+      }
+      reset()
+      setFile(null)
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    }
+  })
   // AddProduct=================================================================
   async function AddProduct(values: AddProductFormType) {
-    setIsLoading(true)
+    update = false
     let imageUrl: string | null = "";
     if (file) {
       imageUrl = await uploadImage(file) || null;
     }
-    const { error } = await supabase.from("products").insert({ ...values, image: imageUrl }).select()
-    if (error) {
-      toast.error(error.message)
-    } else {
-      toast.success('product add Successfully!')
-      reset()
-      setFile(null)
-    }
-    setIsLoading(false)
+    const { data } = await supabase.from("products").insert({ ...values, image: imageUrl }).select()
+    return data
   }
+
   // handle uploade images=======================================================
   async function uploadImage(file: File) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,25 +93,20 @@ const ProductForm = ({ cancel, editingProduct }: ProductFormProps) => {
   }
   // edite product================================================================
   async function edite(id: number, values: AddProductFormType) {
-    setIsLoading(true)
+    update = true
     let imageUrl: string | null | undefined = editingProduct?.image;
     if (file) {
       imageUrl = await uploadImage(file) || editingProduct?.image;
     }
-    const { error } = await supabase.from("products").update({ ...values, image: imageUrl }).eq("id", id)
-    if (error) {
-      toast.error(error.message)
-    } else {
-      toast.success('product updated Successfully!')
-    }
-    setIsLoading(false)
+    const { data } = await supabase.from("products").update({ ...values, image: imageUrl }).eq("id", id)
+    return data
   }
 
 
 
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="bg-white rounded-lg shadow p-6 space-y-4">
+    <form onSubmit={handleSubmit((data) => mutate(data))} className="bg-white rounded-lg shadow p-6 space-y-4">
       <h2 className="text-2xl font-bold mb-4">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <section>
@@ -181,12 +188,12 @@ const ProductForm = ({ cancel, editingProduct }: ProductFormProps) => {
 
       <section className="flex gap-3">
         {editingProduct ? <button type="submit" className="px-6 py-2 cursor-pointer bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-          {isLoading ? <BeatLoader
+          {isPending ? <BeatLoader
             color="#fff"
             size={10}
           /> : "Edite"}
         </button> : <button type="submit" className="px-6 py-2 cursor-pointer bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-          {isLoading ? <BeatLoader
+          {isPending ? <BeatLoader
             color="#fff"
             size={10}
           /> : "Add Product"}
