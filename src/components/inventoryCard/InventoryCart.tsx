@@ -3,14 +3,15 @@ import supabase from "../../../supabase-client";
 import type { Product2 } from "../../types/products.type";
 import { useState } from "react";
 import { BeatLoader } from "react-spinners";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const InventoryCart = ({ product }: { product: Product2 }) => {
   const [editeId, setEditeId] = useState<number | null>(null)
 
-
+  const queryClient = useQueryClient();
 
   // edite Quantity===============================================
-  async function editeQuantity(id: number, change: number) {
+  async function editeQuantity({ id, change }: { id: number; change: number }) {
     setEditeId(id)
     let newQuantity = product.Quantity + change
     if (newQuantity < 0) {
@@ -22,6 +23,18 @@ const InventoryCart = ({ product }: { product: Product2 }) => {
     }
     setEditeId(null)
   }
+
+  const { mutate } = useMutation({
+    mutationFn: editeQuantity,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success('product updated Successfully!')
+
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    }
+  })
 
 
 
@@ -51,25 +64,25 @@ const InventoryCart = ({ product }: { product: Product2 }) => {
         <td className="py-3 px-4">
           <section className="flex justify-center gap-2">
             <button
-              onClick={() => editeQuantity(product.id, -1)}
+              onClick={() => mutate({ id: product.id, change: -1 })}
               className="px-3 py-1 bg-red-100 cursor-pointer text-red-600 rounded hover:bg-red-200 transition"
             >
               -1
             </button>
             <button
-              onClick={() => editeQuantity(product.id, -10)}
+              onClick={() => mutate({ id: product.id, change: -10 })}
               className="px-3 py-1 bg-red-100 cursor-pointer text-red-600 rounded hover:bg-red-200 transition"
             >
               -10
             </button>
             <button
-              onClick={() => editeQuantity(product.id, 1)}
+              onClick={() => mutate({ id: product.id, change: 1 })}
               className="px-3 py-1 bg-green-100 cursor-pointer text-green-600 rounded hover:bg-green-200 transition"
             >
               +1
             </button>
             <button
-              onClick={() => editeQuantity(product.id, 10)}
+              onClick={() => mutate({ id: product.id, change: 10 })}
               className="px-3 py-1 bg-green-100 cursor-pointer text-green-600 rounded hover:bg-green-200 transition"
             >
               +10

@@ -1,72 +1,34 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import supabase from "../../../../supabase-client";
 import toast from "react-hot-toast";
-import type { Products } from "../../../types/products.type";
 import InventoryCart from '../../inventoryCard/InventoryCart';
 import { AlertTriangle } from "lucide-react";
 import Skeleton from "../../../loadings/Skeleton";
 import StockLoading from "../../../loadings/StockLoading";
+import { useQuery } from "@tanstack/react-query";
 
 // Inventory Component
 const Inventory = () => {
-  const [products, setProducts] = useState<Products>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
 
   // get all products===============================================
   const getAllProducts = useCallback(async () => {
-    setIsLoading(true)
     const query = await supabase.from("products").select("*");
-    const { data, error } = query;
+    const { data } = query;
 
+    return data
 
-
-    if (error) {
-      toast.error(error.message)
-    } else {
-      setProducts(data)
-    }
-    setIsLoading(false)
   }, []);
 
-  useEffect(() => {
-    const confirm = () => getAllProducts()
-    confirm()
-
-    const channel = supabase
-      .channel('products_channel')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'products',
-        },
-        () => {
-          getAllProducts();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [getAllProducts])
+  const { data, isLoading, isError, error } = useQuery(
+    { queryKey: ['products'], queryFn: getAllProducts }
+  )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+  if (isError) {
+    toast.error(error.message)
+  }
 
 
 
@@ -83,11 +45,11 @@ const Inventory = () => {
           </section>
           <section className="space-y-3">
             {isLoading ? <StockLoading /> :
-              products.filter(p => p.Quantity < 10).length === 0 ? (
+              data?.filter(p => p.Quantity < 10).length === 0 ? (
                 <p className="text-gray-500">No low stock items</p>
               ) : (
-                products
-                  .filter(p => p.Quantity < 10)
+                data
+                  ?.filter(p => p.Quantity < 10)
                   .map(product => {
                     return <>
                       {product.Quantity != 0 && <section key={product.id} className="flex items-center justify-between p-3 bg-yellow-50 rounded">
@@ -114,11 +76,11 @@ const Inventory = () => {
             <AlertTriangle className="w-6 h-6 text-red-600 mr-2" />
             <h2 className="text-xl font-bold">Out of Stock</h2>
           </section>
-          {isLoading ? <StockLoading /> : products.filter(p => p.Quantity < 10).length === 0 ? (
+          {isLoading ? <StockLoading /> : data?.filter(p => p.Quantity < 10).length === 0 ? (
             <p className="text-gray-500">No low stock items</p>
           ) : (
-            products
-              .filter(p => p.Quantity == 0)
+            data
+              ?.filter(p => p.Quantity == 0)
               .map(product => {
                 return <>
                   {product.Quantity == 0 && <section key={product.id} className="flex items-center justify-between p-3 bg-red-50 rounded">
@@ -162,11 +124,11 @@ const Inventory = () => {
               <Skeleton change={true} />
               <Skeleton change={true} />
             </> : <tbody>
-              {products.map(product => <InventoryCart key={product.id} product={product} />)}
+              {data?.map(product => <InventoryCart key={product.id} product={product} />)}
             </tbody>}
 
           </table>
-           {products.length < 1 && !isLoading && <p className="text-center my-3 capitalize text-[1.1rem] text-gray-500">no data to display</p>}
+          {data && data.length < 1 && !isLoading && <p className="text-center my-3 capitalize text-[1.1rem] text-gray-500">no data to display</p>}
         </section>
 
       </section>
