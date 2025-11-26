@@ -2,18 +2,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AddProductSchema, type AddProductFormType } from "../../schema/AddProduct.schema";
 import type { ProductFormProps } from "../../types/productForm.type";
 import { useForm } from "react-hook-form";
-import supabase from '../../../supabase-client';
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import AddProduct from "../../apis/addProduct";
+import edite from "../../apis/updateProduct";
 
 
 
 const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) => {
   const [file, setFile] = useState<File | null>(null);
   const queryClient = useQueryClient();
-  let update: boolean = false
   // handle form===============================================================
   const {
     register,
@@ -38,9 +38,9 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
   // submit====================================================================
   async function submit(values: AddProductFormType) {
     if (editingProduct) {
-      await edite(editingProduct.id, values)
+      await edite(editingProduct.id, values,file,editingProduct)
     } else {
-      await AddProduct(values)
+      await AddProduct(values,file)
     }
   }
   // handle add & update cashing===============================================
@@ -48,7 +48,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
     mutationFn: submit,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-      if (update) {
+      if (editingProduct) {
         toast.success('product updated Successfully!')
         setShowForm(false)
       } else {
@@ -61,50 +61,6 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
       toast.error(error.message)
     }
   })
-  // AddProduct=================================================================
-  async function AddProduct(values: AddProductFormType) {
-    update = false
-    let imageUrl: string | null = "";
-    if (file) {
-      imageUrl = await uploadImage(file) || null;
-    }
-    const { data } = await supabase.from("products").insert({ ...values, image: imageUrl }).select()
-    return data
-  }
-
-  // handle uploade images=======================================================
-  async function uploadImage(file: File) {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const fileName = `${Date.now()}_${file.name}`;
-    const { error } = await supabase
-      .storage
-      .from('products')
-      .upload(fileName, file);
-
-    if (error) {
-      console.log(error);
-      return null;
-    }
-
-    const { data } = supabase
-      .storage
-      .from('products')
-      .getPublicUrl(fileName);
-    const publicUrl = data?.publicUrl ?? null;
-    return publicUrl;
-  }
-  // edite product================================================================
-  async function edite(id: number, values: AddProductFormType) {
-    update = true
-    let imageUrl: string | null | undefined = editingProduct?.image;
-    if (file) {
-      imageUrl = await uploadImage(file) || editingProduct?.image;
-    }
-    const { data } = await supabase.from("products").update({ ...values, image: imageUrl }).eq("id", id)
-    return data
-  }
-
-
 
 
   return (
@@ -137,7 +93,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
       {/* Category */}
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-          <select {...register("category")} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <select  {...register("category")} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             <option value="men">men</option>
             <option value="women">women</option>
             <option value="kids">kids</option>

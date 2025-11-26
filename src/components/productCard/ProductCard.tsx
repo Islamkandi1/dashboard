@@ -1,18 +1,14 @@
 import toast from 'react-hot-toast'
-import supabase from '../../../supabase-client'
 import type { Product2 } from '../../types/products.type'
 import { Edit, Trash2 } from 'lucide-react'
 import { ClipLoader } from 'react-spinners'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import deleteProduct from '../../apis/deleteProduct'
 
 const ProductCard = ({ product, setEditingProduct, setShowForm }: { product: Product2; setEditingProduct: (product: Product2) => void; setShowForm: (show: boolean) => void }) => {
     const queryClient = useQueryClient();
-    // delete product==========================================================
-    async function deleteProduct(id: number) {
-        const {data } = await supabase.from("products").delete().eq("id", id)
-        return data
-    }
-    // handle add & update cashing===============================================
+
+    // delete product ===============================================
     const { mutate, isPending } = useMutation({
         mutationFn: deleteProduct,
         onSuccess: () => {
@@ -20,7 +16,7 @@ const ProductCard = ({ product, setEditingProduct, setShowForm }: { product: Pro
             queryClient.invalidateQueries({ queryKey: ["products"] });
         },
         onError: (error) => {
-             toast.error(error.message)
+            toast.error(error.message)
         }
     })
     function onEdit(product: Product2) {
@@ -34,7 +30,7 @@ const ProductCard = ({ product, setEditingProduct, setShowForm }: { product: Pro
             </td>
             <td className="py-3 px-4">
                 <section className='max-w-[150px] mx-auto'>
-                    <p className="font-medium">{product.productName}</p>
+                    <p className="font-medium line-clamp-2">{product.productName}</p>
                     <p className="text-sm text-gray-500 line-clamp-1 ">{product.description}</p>
                 </section>
             </td>

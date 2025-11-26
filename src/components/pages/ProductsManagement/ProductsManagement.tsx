@@ -1,12 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { Plus, Search } from "lucide-react";
 import ProductForm from "../../ProductForm/ProductForm";
-import supabase from "../../../../supabase-client";
 import toast from "react-hot-toast";
 import { type Products } from "../../../types/products.type";
 import ProductCard from "../../productCard/ProductCard";
 import Skeleton from "../../../loadings/Skeleton";
 import { useQuery } from "@tanstack/react-query";
+import getAllProducts from "../../../apis/productmanagment";
 // Products Management Component
 const ProductsManagement = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -17,48 +17,12 @@ const ProductsManagement = () => {
   const [stockFilter, setStockFilter] = useState('');
   // data====================================================
   const [editingProduct, setEditingProduct] = useState<Products[0] | null>(null);
-
-  // get all products===============================================
-  const getAllProducts = useCallback(async () => {
-    let query = supabase.from("products").select("*");
-
-    // Search by product name
-    if (searchTerm.trim() !== "") {
-      query = query.ilike("productName", `%${searchTerm}%`);
-    }
-
-    if (categoryFilter.trim() !== "") {
-      query = query.eq("category", categoryFilter);
-    }
-
-    // Filter by price
-    if (priceFilter === "low") {
-      query = query.lt("price", 50);
-    } else if (priceFilter === "Above $200") {
-      query = query.gte("price", 200)
-    } else if (priceFilter === "Under $50") {
-      query = query.lte("price", 50);
-    } else if (priceFilter === "$50 - $200") {
-      query = query.gte("price", 50).lte("price", 200);
-    } else {
-      query = query.gte("price", 0)
-    }
-    // filter by Quantity
-    if (stockFilter === "above") {
-      query = query.gte("Quantity", 10);
-    } else if (stockFilter === "low") {
-      query = query.gt("Quantity", 0).lt("Quantity", 10);
-    } else if (stockFilter === "out") {
-      query = query.eq("Quantity", 0);
-    }
-    const { data } = await query;
-    return data
-  }, [searchTerm, priceFilter, categoryFilter, stockFilter]);
-
-
   // cashing data======================================================
   const { data, isLoading, isError, error } = useQuery(
-    { queryKey: ['products', searchTerm, categoryFilter, priceFilter, stockFilter], queryFn: getAllProducts }
+    {
+      queryKey: ['products', searchTerm, categoryFilter, priceFilter, stockFilter],
+      queryFn: () => getAllProducts(searchTerm, categoryFilter, priceFilter, stockFilter)
+    }
   )
 
   // hide form===========================================================
