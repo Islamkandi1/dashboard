@@ -5,6 +5,7 @@ export interface Product2 {
   Quantity: number;
   category: string;
   subcategory: string;
+  brand: string;
   created_at: string;
   description: string;
   id: 8;

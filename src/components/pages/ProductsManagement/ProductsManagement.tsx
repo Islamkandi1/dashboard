@@ -125,16 +125,16 @@ const ProductsManagement = () => {
         </section>
 
         <section className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full text-center">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-3 px-4">Product</th>
-                <th className="text-left py-3 px-4">Product name</th>
-                <th className="text-left py-3 px-4">Category</th>
-                <th className="text-left py-3 px-4">Price</th>
-                <th className="text-left py-3 px-4">Stock</th>
-                <th className="text-left py-3 px-4">Colors</th>
-                <th className="text-right py-3 px-4">Actions</th>
+                <th className=" py-3 px-4">Product</th>
+                <th className=" py-3 px-4">Product name</th>
+                <th className=" py-3 px-4">Category</th>
+                <th className=" py-3 px-4">Price</th>
+                <th className=" py-3 px-4">Stock</th>
+                <th className=" py-3 px-4">Colors</th>
+                <th className=" py-3 px-4">Actions</th>
               </tr>
             </thead>
             <tbody>

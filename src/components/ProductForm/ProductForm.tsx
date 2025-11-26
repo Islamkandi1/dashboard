@@ -26,6 +26,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
       price: editingProduct ? String(editingProduct.price) : "",
       category: editingProduct ? editingProduct.category : "",
       subcategory: editingProduct ? editingProduct.subcategory : "",
+      brand: editingProduct ? editingProduct.brand : "",
       Quantity: editingProduct ? String(editingProduct.Quantity) : "",
       Colors: editingProduct ? editingProduct.Colors : "",
       description: editingProduct ? editingProduct.description : "",
@@ -110,6 +111,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
     <form onSubmit={handleSubmit((data) => mutate(data))} className="bg-white rounded-lg shadow p-6 space-y-4">
       <h2 className="text-2xl font-bold mb-4">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Product Name */}
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
           <input
@@ -121,7 +123,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
           {errors.productName && touchedFields.productName && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.productName.message}</p>}
 
         </section>
-
+        {/* Price */}
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Price</label>
           <input
@@ -132,7 +134,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
           />
           {errors.price && touchedFields.price && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.price.message}</p>}
         </section>
-
+      {/* Category */}
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
           <select {...register("category")} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -143,7 +145,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
 
           {errors.category && touchedFields.category && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.category.message}</p>}
         </section>
-
+        {/* subcategory */}
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Subcategory</label>
           <select {...register("subcategory")} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -154,7 +156,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
 
           {errors.category && touchedFields.category && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.category.message}</p>}
         </section>
-
+        {/* Quantity */}
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Stock Quantity</label>
           <input
@@ -164,7 +166,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
           />
           {errors.Quantity && touchedFields.Quantity && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.Quantity.message}</p>}
         </section>
-
+      {/* colors */}
         <section>
           <label className="block text-sm font-medium text-gray-700 mb-2">Colors (comma separated)</label>
           <input
@@ -174,6 +176,18 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           {errors.Colors && touchedFields.Colors && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.Colors.message}</p>}
+        </section>
+        {/* brand */}
+           <section>
+          <label className="block text-sm font-medium text-gray-700 mb-2">brands</label>
+          <select {...register("brand")} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="adidas">Adidas</option>
+            <option value="nike">Nike</option>
+            <option value="Calvin Klein">Calvin Klein</option>
+            <option value="Gucci">Gucci</option>
+          </select>
+
+          {errors.category && touchedFields.category && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.category.message}</p>}
         </section>
       </section>
 

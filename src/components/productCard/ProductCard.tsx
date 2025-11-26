@@ -30,15 +30,15 @@ const ProductCard = ({ product, setEditingProduct, setShowForm }: { product: Pro
     return (
         <tr key={product.id} className="border-b hover:bg-gray-50">
             <td>
-                <img src={product.image || undefined} className='w-[70px]  object-cover mx-auto' alt="" />
+                <img src={product.image || undefined} loading='lazy' className='w-[70px]  object-cover mx-auto' alt="" />
             </td>
-            <td className="py-3 px-4 text-center">
-                <section className='max-w-[100px]'>
+            <td className="py-3 px-4">
+                <section className='max-w-[150px] mx-auto'>
                     <p className="font-medium">{product.productName}</p>
                     <p className="text-sm text-gray-500 line-clamp-1 ">{product.description}</p>
                 </section>
             </td>
-            <td className="py-3 px-4 text-center">
+            <td className="py-3 px-4 ">
                 <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">{product.category}</span>
             </td>
             <td className="py-3 px-4 font-medium">${product.price}</td>
@@ -49,7 +49,7 @@ const ProductCard = ({ product, setEditingProduct, setShowForm }: { product: Pro
             </td>
             <td className="py-3 px-4 text-sm">{Array.isArray(product.Colors) ? product.Colors.join(', ') : product.Colors}</td>
             <td className="py-3 px-4">
-                <section className="flex justify-end items-center gap-2">
+                <section className="flex justify-center items-center gap-2">
                     <button onClick={() => onEdit(product)} className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded transition">
                         <Edit className="w-4 h-4" />
                     </button>
