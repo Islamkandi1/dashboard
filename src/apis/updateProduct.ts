@@ -10,14 +10,19 @@ async function edite(
   file: File | null,
   editingProduct: Product2
 ) {
+  console.log(id,values);
+  
   let imageUrl: string | null | undefined = editingProduct?.image;
   if (file) {
     imageUrl = (await uploadImage(file)) || editingProduct?.image;
   }
-  const { data } = await supabase
+  const { data,error } = await supabase
     .from("products")
     .update({ ...values, image: imageUrl })
-    .eq("id", id);
+    .eq("id", id).select()
+    if(error){
+      throw error
+    }
   return data;
 }
 

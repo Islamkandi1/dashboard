@@ -2,7 +2,7 @@ export type Products = Product2[];
 
 export interface Product2 {
   Colors: string;
-  Quantity: number;
+  Quantity: number ;
   category: string;
   subcategory: string;
   brand: string;
@@ -10,6 +10,6 @@ export interface Product2 {
   description: string;
   id: 8;
   image: string | null;
-  price: number;
+  price: number ;
   productName: string;
 }
