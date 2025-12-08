@@ -64,6 +64,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
 
 
   return (
+    <>
     <form onSubmit={handleSubmit((data) => mutate(data))} className="bg-white rounded-lg shadow p-6 space-y-4">
       <h2 className="text-2xl font-bold mb-4">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -193,6 +194,9 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
         </button>
       </section>
     </form>
+        {/* -----------------------------head tag----------------------------- */}
+    <title>Add Product</title>
+    </>
   );
 };
 export default React.memo(ProductForm)
