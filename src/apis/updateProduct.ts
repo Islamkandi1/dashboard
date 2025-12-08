@@ -10,7 +10,6 @@ async function edite(
   file: File | null,
   editingProduct: Product2
 ) {
-  console.log(id,values);
   
   let imageUrl: string | null | undefined = editingProduct?.image;
   if (file) {

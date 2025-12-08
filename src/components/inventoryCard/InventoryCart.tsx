@@ -41,11 +41,11 @@ const InventoryCart = ({ product }: { product: Product2 }) => {
   return (
     <>
       <tr key={product.id} className="border-b relative hover:bg-gray-50">
-        <td className="py-3 px-4 font-medium text-center">{product.productName}</td>
-        <td className="py-3 px-4 text-center">
+        <td className="p-3 font-medium text-left">{product.productName}</td>
+        <td className="p-3 text-center">
           <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">{product.category}</span></td>
-        <td className="py-3 px-4 font-bold text-lg text-center">{product.Quantity}</td>
-        <td className="py-3 px-4 text-center">
+        <td className="p-3 font-bold text-lg text-center">{product.Quantity}</td>
+        <td className="p-3 text-center">
           <span
             className={`px-2 py-1 rounded text-sm ${product.Quantity === 0
               ? "bg-red-100 text-red-800"
@@ -61,7 +61,7 @@ const InventoryCart = ({ product }: { product: Product2 }) => {
                 : "In Stock"}
           </span>
         </td>
-        <td className="py-3 px-4">
+        <td className="p-3">
           <section className="flex justify-center gap-2">
             <button
               onClick={() => mutate({ id: product.id, change: -1 })}

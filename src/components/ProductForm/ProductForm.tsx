@@ -3,7 +3,7 @@ import { AddProductSchema, type AddProductFormType } from "../../schema/AddProdu
 import type { ProductFormProps } from "../../types/productForm.type";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import React, { useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddProduct from "../../apis/addProduct";
@@ -153,7 +153,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
           {errors.category && touchedFields.category && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.category.message}</p>}
         </section>
       </section>
-
+      {/* description */}
       <section>
         <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
         <textarea
@@ -162,7 +162,7 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
         />
         {errors.description && touchedFields.description && <p className="bg-red-300 text-red-800 capitalize rounded-lg px-4 py-1 mt-2">{errors.description.message}</p>}
       </section>
-
+      {/* image */}
       <section>
         <label className="block text-sm font-medium text-gray-700 mb-2">Image</label>
         <input
@@ -195,4 +195,4 @@ const ProductForm = ({ cancel, editingProduct, setShowForm }: ProductFormProps) 
     </form>
   );
 };
-export default ProductForm
+export default React.memo(ProductForm)
