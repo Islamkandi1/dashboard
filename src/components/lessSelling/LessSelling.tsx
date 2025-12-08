@@ -24,19 +24,20 @@ export default function LeastSelling() {
         }
 
         const productSales: Record<string, { name: string; count: number, price: number, id: number }> = {};
-
+            
         orders.forEach((order) => {
             order.products.forEach((product: orderProducts) => {
 
-                if (!productSales[product.id]) {
-                    productSales[product.id] = {
+
+                if (!productSales[product.productName]) {
+                    productSales[product.productName] = {
                         name: product.productName,
                         count: 1,
                         price: product.price,
                         id: product.id
                     };
                 } else {
-                    productSales[product.id].count++;
+                    productSales[product.productName].count++;
                 }
             });
         });
@@ -49,10 +50,9 @@ export default function LeastSelling() {
 
         setLoading(false);
     }
-
     useEffect(() => {
-       const confirm = ()=> getData();
-       confirm()
+        const confirm = () => getData();
+        confirm()
     }, []);
 
     return (
@@ -63,7 +63,7 @@ export default function LeastSelling() {
             </h2>
 
             <section className="space-y-3">
-                {loading && <ProductSalesSkeleton color="red"/>}
+                {loading && <ProductSalesSkeleton color="red" />}
                 {leastSelling.map((product, idx) => (
                     <section key={product.id} className="flex items-center justify-between p-3 bg-red-50 rounded">
                         <section className="flex items-center">

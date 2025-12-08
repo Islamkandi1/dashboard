@@ -28,10 +28,10 @@ export default function TopSelling() {
         orders.forEach((order) => {
             order.products.forEach((product: orderProducts) => {
 
-                if (!productSales[product.id]) {
-                    productSales[product.id] = { name: product.productName, count: 1, price: product.price,id:product.id };
+                if (!productSales[product.productName]) {
+                    productSales[product.productName] = { name: product.productName, count: 1, price: product.price,id:product.id };
                 } else {
-                    productSales[product.id].count++;
+                    productSales[product.productName].count++;
                 }
             });
         });
@@ -40,7 +40,7 @@ export default function TopSelling() {
         setTopSelling(
             [...salesArray].sort((a, b) => b.count - a.count).slice(0, 5)
         )
-
+        console.log("top =", topSelling);
         setLoading(false);
     }
 

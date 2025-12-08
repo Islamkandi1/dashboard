@@ -12,8 +12,8 @@ const StoreAdmin = () => {
           <section>
             <section className="mb-8">
               <h1 className="text-2xl font-bold flex items-center ">
-                <ShoppingBag className="w-8 h-8 mr-2" />
-                E-Store Admin
+                <ShoppingBag className="w-6 h-8 mr-2" />
+                Shop.co Admin
               </h1>
             </section>
 
