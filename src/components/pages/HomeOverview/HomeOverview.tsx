@@ -9,6 +9,7 @@ import LeastSelling from "../../lessSelling/LessSelling";
 // Home Overview Component
 const HomeOverview = () => {
   return (
+    <>
     <main className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
 
@@ -49,6 +50,9 @@ const HomeOverview = () => {
       </section>
 
     </main>
+    {/* --------------------title------------------------- */}
+    <title>Dashboard Overview</title>
+    </>
   );
 };
 export default HomeOverview

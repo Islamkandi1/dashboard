@@ -17,17 +17,21 @@ const OrdersManagement = () => {
     toast.error(error.message)
   }
   return (
-    <section className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-800">Orders Management</h1>
+    <>
+      <section className="space-y-6">
+        <h1 className="text-3xl font-bold text-gray-800">Orders Management</h1>
 
-      <section className="bg-white rounded-lg shadow overflow-hidden">
-        <section className="overflow-x-auto">
+        <section className="bg-white rounded-lg shadow overflow-hidden">
+          <section className="overflow-x-auto">
 
-          <OrderTable data={data} isLoading={isLoading} />
-          
+            <OrderTable data={data} isLoading={isLoading} />
+
+          </section>
         </section>
       </section>
-    </section>
+      {/* ----------------------------head tag------------------------- */}
+      <title>Order Managment</title>
+    </>
   );
 };
 export default OrdersManagement

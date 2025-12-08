@@ -1,4 +1,4 @@
-import { AlertTriangle, BarChart3, Package, ShoppingBag, ShoppingCart, TrendingUp } from "lucide-react";
+import { AlertTriangle, BarChart3, Package, ShoppingBag, ShoppingCart } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import Logout from "../Auth/logout/LogOut";
 
@@ -48,14 +48,6 @@ const StoreAdmin = () => {
               >
                 <AlertTriangle className="w-5 h-5 mr-3" />
                 Inventory
-              </NavLink>
-
-              <NavLink
-                to="/Analytics"
-                className={`w-full flex items-center px-4 py-3 rounded-lg transition `}
-              >
-                <TrendingUp className="w-5 h-5 mr-3" />
-                Analytics
               </NavLink>
             </nav>
           </section>

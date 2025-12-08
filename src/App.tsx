@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Analytics from './components/pages/Analytics/Analytics';
 import HomeOverview from './components/pages/HomeOverview/HomeOverview';
 import Inventory from './components/pages/Inventory/Inventory';
 import OrdersManagement from './components/pages/OrdersManagement/OrdersManagement';
@@ -30,7 +29,6 @@ const App = () => {
         { path: "/Products", element: <ProjectProtected><ProductsManagement /></ProjectProtected> },
         { path: "/Orders", element: <ProjectProtected><OrdersManagement /></ProjectProtected> },
         { path: "/Inventory", element: <ProjectProtected><Inventory /></ProjectProtected> },
-        { path: "/Analytics", element: <ProjectProtected><Analytics /></ProjectProtected> },
         { path: "*", element: <NotFound /> },
       ]
     },

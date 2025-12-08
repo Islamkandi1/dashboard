@@ -38,7 +38,7 @@ const SignUp = () => {
             password: values.password,
             options: {
                 data: {
-                    full_name: values.name, 
+                    full_name: values.name,
                 },
             },
         })
@@ -202,7 +202,8 @@ const SignUp = () => {
                     </section>
                 </section>
             </main>
-
+            {/* -----------------------------head tag----------------------------- */}
+            <title>Register</title>
         </>
     )
 }

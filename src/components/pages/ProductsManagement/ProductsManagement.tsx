@@ -44,6 +44,7 @@ const ProductsManagement = () => {
 
 
   return (
+    <>
     <main className="space-y-6">
       <section className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-800">Products Management</h1>
@@ -115,6 +116,9 @@ const ProductsManagement = () => {
 
       </section>
     </main>
+    {/* --------------------------------------head tag--------------------------- */}
+    <title>Product Managment</title>
+    </>
   );
 };
 export default ProductsManagement

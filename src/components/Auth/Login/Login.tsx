@@ -77,6 +77,7 @@ export default function Login() {
 
 
   return (
+    <>
     <main className="min-h-screen bg-linear-to-br from-blue-500   via-blue-500 to-purple-500  flex items-center justify-center p-4">
       <section className="w-full md:w-[75%] lg:w-[50%]  gap-6r">
 
@@ -182,5 +183,8 @@ export default function Login() {
 
       </section>
     </main>
+    {/* -----------------------------head tag----------------------------- */}
+    <title>LogIn</title>
+    </>
   );
 }

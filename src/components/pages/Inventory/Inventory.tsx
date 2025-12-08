@@ -24,6 +24,7 @@ const Inventory = () => {
 
 
   return (
+    <>
     <main className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800">Inventory Management</h1>
 
@@ -115,6 +116,9 @@ const Inventory = () => {
 
       </section>
     </main>
+    {/* ------------------------title------------------------------- */}
+    <title>Inventory</title>
+    </>
   );
 };
 export default Inventory

@@ -1,7 +1,7 @@
 import { TrendingDown, TrendingUp } from "lucide-react";
 
 // KPI Card Component
-const KPICard = ({ title, value, icon: Icon, trend, color }) => (
+const KPICard = ({ title, value, icon: Icon, trend, color }:{title:string,value:number|null|string,icon:React.FC<React.SVGProps<SVGSVGElement>>,trend:number,color:string}) => (
   <main className="bg-white rounded-lg shadow p-6">
     <section className="flex items-center justify-between">
       <section>
