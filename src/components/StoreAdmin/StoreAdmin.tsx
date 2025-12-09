@@ -1,11 +1,11 @@
 import { AlertTriangle, BarChart3, Package, ShoppingBag, ShoppingCart } from "lucide-react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Logout from "../Auth/logout/LogOut";
 
 const StoreAdmin = () => {
   return (
     <>
-      <main className="min-h-screen bg-gray-100">
+     
         {/* Sidebar */}
         <section className="fixed flex flex-col justify-between  left-0 top-0 h-full w-64 bg-gray-900 text-white p-6">
 
@@ -51,18 +51,8 @@ const StoreAdmin = () => {
               </NavLink>
             </nav>
           </section>
-
-
-
           <Logout />
-
-
-
         </section>
-
-        {/* Main Content */}
-        <section className="ml-64 p-8 "><Outlet /></section>
-      </main>
     </>
   );
 };
