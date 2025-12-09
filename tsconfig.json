@@ -2,6 +2,7 @@
   "compilerOptions": {
     "verbatimModuleSyntax": false,
     "erasableSyntaxOnly": false,
+    "skipLibCheck": true
   },
   "files": [],
   "references": [
