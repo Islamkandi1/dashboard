@@ -2,7 +2,6 @@
   "compilerOptions": {
     "verbatimModuleSyntax": false,
     "erasableSyntaxOnly": false,
-    "types": ["node"]
   },
   "files": [],
   "references": [
