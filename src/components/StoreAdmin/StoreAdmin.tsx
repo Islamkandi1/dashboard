@@ -20,7 +20,7 @@ const StoreAdmin = () => {
         <button type="button" className="mt-3 flex justify-end ms-auto px-2 bg-[#155DFC] rounded-lg py-1 mr-3 cursor-pointer  md:hidden" onClick={closeSlide}>
           <X />
         </button>
-        <section className={` flex flex-col justify-between h-full  md:w-64  p-6 pt-2 md:pt-6`}>
+        <section className={` flex flex-col justify-between  h-[90%] md:h-full  md:w-64  p-6 pt-2 md:py-6`}>
           <section>
             <section className="mb-8">
               <h1 className="text-2xl font-bold flex items-center ">
