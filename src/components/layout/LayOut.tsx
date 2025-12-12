@@ -6,10 +6,10 @@ const LayOut = () => {
 
   return (
     <>
-      <main className="min-h-screen bg-gray-100">
+      <main className="min-h-screen overflow-auto bg-gray-100">
         <StoreAdmin />
         {/* Main Content */}
-        <section className="ml-64 p-8 "><Outlet /></section>
+        <section className="md:ml-64 p-3 md:p-8 "><Outlet /></section>
       </main>
     </>
   )
