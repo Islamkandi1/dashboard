@@ -1,5 +1,5 @@
 // import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomeOverview from './components/pages/HomeOverview/HomeOverview';
+// import HomeOverview from './components/pages/HomeOverview/HomeOverview';
 // import Inventory from './components/pages/Inventory/Inventory';
 // import OrdersManagement from './components/pages/OrdersManagement/OrdersManagement';
 // import ProductsManagement from './components/pages/ProductsManagement/ProductsManagement';
@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <>
-      <HomeOverview />
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit, dolor.</p>
       {/* <Toaster />
     <QueryClientProvider client={queryClient}>
       <UserSession>
