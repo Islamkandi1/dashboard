@@ -10,7 +10,7 @@ import HomeOverview from './components/pages/HomeOverview/HomeOverview';
 // import UserSession from './context/userSession/UserSession';
 // import ForgetPassword from './components/pages/resetPassword/ForgetPassword';
 // import ResetPassword from './components/Auth/resetPassword/ResetPassword';
-import ProjectProtected from './protectedRoutes/ProjectProtected';
+// import ProjectProtected from './protectedRoutes/ProjectProtected';
 // import AuthProtected from './protectedRoutes/AuthProtected';
 // import NotFound from './components/notFound/NotFound';
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <>
-      <ProjectProtected><HomeOverview /></ProjectProtected>
+      <HomeOverview />
       {/* <Toaster />
     <QueryClientProvider client={queryClient}>
       <UserSession>
