@@ -1,8 +1,8 @@
 import supabase from "../../supabase-client";
-
-const { count } = await supabase
-  .from("orders")
-  .select("*", { count: "exact", head: true });
-    const ordersCount  = count
-
-export default ordersCount;
+async function getTotalOrders() {
+  const { count } = await supabase
+    .from("orders")
+    .select("*", { count: "exact", head: true });
+  return count
+}
+export default getTotalOrders
