@@ -7,7 +7,7 @@ import LayOut from './components/layout/LayOut';
 import { Toaster } from 'react-hot-toast';
 import Login from './components/Auth/Login/Login';
 import SignUp from './components/Auth/signUp/SignUp';
-import UserSession from './context/userSession/UserSession';
+// import UserSession from './context/userSession/UserSession';
 import ForgetPassword from './components/pages/resetPassword/ForgetPassword';
 import ResetPassword from './components/Auth/resetPassword/ResetPassword';
 import ProjectProtected from './protectedRoutes/ProjectProtected';
@@ -42,9 +42,9 @@ const App = () => {
     <>
       <Toaster />
     <QueryClientProvider client={queryClient}>
-      <UserSession>
+      {/* <UserSession> */}
         <RouterProvider router={router} />
-      </UserSession>
+      {/* </UserSession> */}
     </QueryClientProvider>
     </>
   );
